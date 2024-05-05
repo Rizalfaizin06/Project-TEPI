@@ -6,7 +6,16 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: "#013d7c", // Your custom blue color
+                secondary: "#ecc94b", // Your custom yellow color
+                // ... other colors
+            },
+        },
+        fontFamily: {
+            poppins: ["Poppins"],
+        },
     },
-    plugins: [],
+    plugins: [require("flowbite/plugin")],
 };
