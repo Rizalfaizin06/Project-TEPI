@@ -19,5 +19,5 @@ Route::get('/', function () {
 
 
 Route::get('/home', function () {
-    return view('home', ["title" => "Home", "rooms" => [["title" => "Lab 201", "desc" => "lab unaki1"], ["title" => "Lab 202", "desc" => "lab unaki2"]]]);
+    return view('home', ["title" => "Home", "rooms" => [["title" => "Lab Pemrograman", "status" => true, "desc" => "lab unaki1", "feature" => "fan"], ["title" => "Lab Multimedia", "status" => false, "desc" => "lab unaki2", "feature" => "ac"]]]);
 });

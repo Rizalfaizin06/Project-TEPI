@@ -8,11 +8,13 @@ class Card extends Component
 {
     public $title;
     public $body;
+    public $feature;
 
-    public function __construct($title, $body)
+    public function __construct($title, $body, $feature)
     {
         $this->title = $title;
         $this->body = $body;
+        $this->feature = $feature;
     }
     /**
      * Get the view / contents that represent the component.

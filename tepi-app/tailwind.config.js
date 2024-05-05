@@ -9,7 +9,7 @@ export default {
         extend: {
             colors: {
                 primary: "#013d7c", // Your custom blue color
-                secondary: "#ecc94b", // Your custom yellow color
+                secondary: "#b0c3d6", // Your custom yellow color
                 // ... other colors
             },
         },

@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@iconify/tailwind": "^1.0.1",
         "autoprefixer": "^10.4.19",
         "axios": "^0.21",
         "flowbite": "^2.3.0",
