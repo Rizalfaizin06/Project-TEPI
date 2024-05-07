@@ -11,17 +11,16 @@
 
 <body>
     <?php
-    $fac = $rooms[3]->facility->pluck('category')->toArray();
+    // $fac = $rooms[3]->facility->pluck('category')->toArray();
     
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
     // var_dump($fac);
-    
     ?>
 
     <x-navbar />
-    <div class="container   ">
+    <div class="w-full ">
         <div class="flex justify-between items-center p-5">
             <div class=" ">
                 <x-search-bar />
@@ -31,19 +30,34 @@
                 <x-dropdown />
             </div>
         </div>
-
         <h1 class="text-primary font-poppins font-bold text-2xl p-5">Laboratorium</h1>
+
 
         <div class="flex gap-5 overflow-x-scroll px-5">
             @foreach ($rooms as $room)
-                {{-- <x-card title="{{ $room->title }}" desc="{{ $room->description }}" pic="{{ $room->picture }}"
-                    status="{{ $room->status }}" facility="{{ $room->facility->pluck('category')->toJson() }}" /> --}}
-                <x-card :title="$room->title" :desc="$room->description" :pic="$room->picture" :status="$room->status" :facility="$room->facility->pluck('category')->toArray()" />
+                <form action="/room/details" method="post">
+                    @csrf
+                    <?php
+                    $room_data = [
+                        'id' => $room->id,
+                        'title' => $room->title,
+                        'picture' => $room->picture,
+                        'description' => $room->description,
+                        'facility' => $room->facility->pluck('category')->toArray(),
+                    ];
+                    ?>
+                    <input type="hidden" name="room_data" value="{{ json_encode($room_data) }}">
+                    <button type="submit">
+                        <x-card :title="$room->title" :desc="$room->description" :pic="$room->picture" :status="$room->status"
+                            :facility="$room->facility->pluck('category')->toArray()" />
+                    </button>
+                </form>
             @endforeach
 
         </div>
 
     </div>
+
 
 </body>
 

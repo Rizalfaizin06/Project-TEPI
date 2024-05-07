@@ -12,4 +12,6 @@ class HomeController extends Controller
     {
         return view('home', ["title" => "Home", "rooms" => Room::with('facility')->get()]);
     }
+
+
 }

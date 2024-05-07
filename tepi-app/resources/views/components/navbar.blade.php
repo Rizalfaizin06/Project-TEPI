@@ -1,7 +1,7 @@
 <nav class="bg-primary border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="images/logo/unaki-logo.png" class="h-8" alt="Unaki Logo" />
+            <img src="/images/logo/unaki-logo.png" class="h-8" alt="Unaki Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap text-white font-poppins">TEPI</span>
         </a>
         <button data-collapse-toggle="navbar-default" type="button"

@@ -24,11 +24,25 @@
 
             <?php sort($facility);
             
-            $uniqueFacilities = [];
+            // $uniqueFacilities = [];
             
-            // Sementara hapus duplikat
+            // // Sementara hapus duplikat
+            // foreach ($facility as $facility_row) {
+            //     if (!in_array($facility_row, $uniqueFacilities)) {
+            //         $uniqueFacilities[] = $facility_row;
+            //     }
+            // }
+            
+            $uniqueFacilities = [];
             foreach ($facility as $facility_row) {
-                if (!in_array($facility_row, $uniqueFacilities)) {
+                $found = false;
+                foreach ($uniqueFacilities as $uniqueFacility) {
+                    if ($facility_row['category'] == $uniqueFacility['category']) {
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found) {
                     $uniqueFacilities[] = $facility_row;
                 }
             }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,5 @@ Route::get('/', function () {
 
 
 Route::get('/home', [HomeController::class, 'index']);
+Route::post('/room/details', [RoomController::class, 'details']);
+
