@@ -1,6 +1,6 @@
 <div class="min-w-64 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="rounded-t-lg h-64" src="images/rooms/Lab-202.jpg" alt="" />
+        <img class="rounded-t-lg h-64" src="{{ $pic }}" alt="" />
     </a>
     <div class="p-5">
         <a href="#">

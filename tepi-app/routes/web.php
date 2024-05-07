@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,7 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index']);
 Route::post('/room/details', [RoomController::class, 'details']);
+Route::post('/room/booking', [RoomController::class, 'booking']);
+Route::post('/room/access', [RoomController::class, 'access']);
+Route::post('/student/category', [StudentController::class, 'getGroupCategory'])->name('get-category');
 

@@ -27,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('package-alert', Card::class);
+        date_default_timezone_set('Asia/Jakarta');
+
     }
 }

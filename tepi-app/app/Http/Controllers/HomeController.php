@@ -10,7 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home', ["title" => "Home", "rooms" => Room::with('facility')->get()]);
+        $rooms = Room::with('facility')->get();
+        return view('home', ["title" => "Home", "rooms" => $rooms]);
     }
 
 
