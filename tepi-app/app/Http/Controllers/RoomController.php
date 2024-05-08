@@ -14,12 +14,15 @@ class RoomController extends Controller
     // }
     public function details(Request $request)
     {
+
+
         $room_data = $request->input('room_data');
         return view('room_details', ["title" => "Home", "room_data" => $room_data]);
     }
 
     public function booking(Request $request)
     {
+        RoomAccess::where('confirmation', 0)->delete();
         $booking_data = $request->input();
         // $student = Student::with('student_group')->get();
         // $validatedData = $request->validate([
@@ -97,7 +100,15 @@ class RoomController extends Controller
             }
 
             // Update room accesses dengan student_id dari mahasiswa yang ditemukan
-            RoomAccess::whereNull('student_id')->update(['student_id' => $student->id]);
+            $updatedRows = RoomAccess::whereNull('student_id')->update(['student_id' => $student->id]);
+
+            // Check if any records were updated
+            if ($updatedRows === 0) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Tidak ada data null yang ditemukan untuk diperbarui.',
+                ], 404);
+            }
 
             // Redirect atau kirim respons sukses ke pengguna
             return response()->json([
@@ -147,25 +158,16 @@ class RoomController extends Controller
         }
 
 
-        $data_booking = [
-            'date' => $data[0]['date'],
-            'time_start' => $data[0]['time_start'],
-            'time_end' => $data[0]['time_end'],
-            'description' => $data[0]['description'],
+        $booking_data = [
+            'booking' => [
+                'date' => $data[0]['date'],
+                'time_start' => $data[0]['time_start'],
+                'time_end' => $data[0]['time_end'],
+                'description' => $data[0]['description'],
+            ],
             'student' => $data[0]['student'],
             'rooms' => $data[0]['rooms'],
             'group_category' => $groupCategories
-            // foreach ($data as $item) {
-            //     $newItem = [
-            //         'student' => $item['student'],
-            //         'rooms' => $item['rooms'],
-            //         'data' => $item['group_category'],
-            //     ];
-            //     unset($newItem['data']['student']);
-            //     unset($newItem['data']['rooms']);
-            //     $newData[] = $newItem;
-            // },
-
         ];
         // foreach ($data as $item) {
         //     echo json_encode($item['student'], true);
@@ -208,11 +210,22 @@ class RoomController extends Controller
         // $newJsonData = json_encode(['' => $newData], JSON_PRETTY_PRINT);
         // echo $newJsonData;
 
-        return $data_booking;
+        // return $booking_data;
+        return view('room_confirmation', ["title" => "Home", "booking_data" => $booking_data]);
+
 
 
     }
 
+
+    public function confirm_booking()
+    {
+        // Memperbarui entri di tabel room_accesses di mana nilai kolom status adalah 0 menjadi 1
+        RoomAccess::where('confirmation', 0)->update(['confirmation' => 1]);
+
+        // Redirect ke halaman home
+        return redirect()->route('home_page');
+    }
 
     public function access(Request $request)
     {

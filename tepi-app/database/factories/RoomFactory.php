@@ -14,9 +14,10 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'title' => 'Lab ' . $this->faker->sentence(1),  // Ensure unique emails
+            'title' => $this->faker->randomElement(['Lab Pemrograman', 'Lab Multimedia', 'Lab Bahasa']),  // Ensure unique emails
             'description' => $this->faker->realText(200),    // Generate realistic descriptions
-            'picture' => $this->faker->imageUrl(640, 480),  // Create placeholder images
+            // 'picture' => $this->faker->imageUrl(640, 480),  // Create placeholder images
+            'picture' => $this->faker->randomElement(['/images/rooms/Lab-202.jpg', '/images/rooms/Lab-203.jpg', '/images/rooms/Lab-Bahasa.png']),  // Create placeholder images
             'status' => $this->faker->boolean,              // Randomize status
 
         ];

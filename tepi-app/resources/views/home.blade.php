@@ -16,7 +16,12 @@
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
-    // var_dump($fac);
+    // var_dump($rooms[3]['facilities']);
+    
+    // Memisahkan string berdasarkan koma dan menjadikannya array
+    
+    // Menampilkan hasil
+    // print_r($data_fasilities);
     ?>
 
     <x-navbar />
@@ -38,18 +43,22 @@
                 <form action="/room/details" method="post">
                     @csrf
                     <?php
+                    
+                    // echo $room->facilities;
+                    $data_fasilities = explode(',', $room->facilities);
+                    // var_dump($data_fasilities);
                     $room_data = [
                         'id' => $room->id,
                         'title' => $room->title,
                         'picture' => $room->picture,
                         'description' => $room->description,
-                        'facility' => $room->facility->pluck('category')->toArray(),
+                        'facility' => $data_fasilities,
                     ];
                     ?>
                     <input type="hidden" name="room_data" value="{{ json_encode($room_data) }}">
                     <button type="submit">
-                        <x-card :title="$room->title" :desc="$room->description" :pic="$room->picture" :status="$room->status"
-                            :facility="$room->facility->pluck('category')->toArray()" />
+                        <x-card :title="$room->title" :desc="$room->description" :pic="$room->picture" :status="$room->room_state"
+                            :facility="$data_fasilities" />
                     </button>
                 </form>
             @endforeach
@@ -58,7 +67,7 @@
 
     </div>
 
-
+    {{-- 
     <script>
         $(document).ready(function() {
             $('.group').select2({
@@ -89,7 +98,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 
 

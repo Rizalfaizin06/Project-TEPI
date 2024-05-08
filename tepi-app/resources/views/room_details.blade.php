@@ -28,8 +28,8 @@
 
 
 
-    <x-navbar />
-    <div class="w-full p-5 flex justify-center">
+    {{-- <x-navbar /> --}}
+    <div class="w-full p-5 flex justify-center items-center h-screen">
         <div class="flex">
             <div>
                 <x-picture-card :image="$room_data['picture']" />
@@ -44,7 +44,7 @@
                 foreach ($room_data['facility'] as $facility_row) {
                     $found = false;
                     foreach ($uniqueFacilities as $uniqueFacility) {
-                        if ($facility_row['category'] == $uniqueFacility['category']) {
+                        if ($facility_row == $uniqueFacility) {
                             $found = true;
                             break;
                         }
@@ -56,7 +56,7 @@
                 ?>
                 <div class=" flex gap-5 ">
                     @foreach ($uniqueFacilities as $fac)
-                        <x-feature-badge logo="{{ $fac['category'] }}" />
+                        <x-feature-badge logo="{{ $fac }}" />
                     @endforeach
                 </div>
                 <h1 class="text-primary font-poppins font-bold text-2xl  pt-10 min-w-40">Booking</h1>
@@ -73,7 +73,7 @@
 
                                     <input type="time" id="time_start" name="time_start"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        min="06:00" max="22:00" value="06:00" required />
+                                        min="06:00" max="22:00" required />
 
                                     <span class="mx-4 text-gray-500">to</span>
 
@@ -81,7 +81,7 @@
 
                                     <input type="time" id="time_end" name="time_end"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        min="06:00" max="22:00" value="08:00" required />
+                                        min="06:00" max="22:00" required />
 
 
                                 </div>
@@ -109,8 +109,6 @@
                                         required></select>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="w-1/2 flex flex-col justify-between">
@@ -124,8 +122,8 @@
                             <input type="hidden" name="room_id" value="{{ $room_data['id'] }}">
                             <div class="flex gap-5 w-full">
 
-                                <button type="button" onclick="window.location='{{ route('home-page') }}'"
-                                    class="text-primary border-primary hover:bg-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center border dark:text-blue-600 dark:hover:text-primary dark:focus:ring-blue-700 mt-5 w-full">cancle</button>
+                                <button type="button" onclick="window.location='{{ route('home_page') }}'"
+                                    class="text-primary border-primary hover:bg-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center border dark:text-blue-600 dark:hover:text-primary dark:focus:ring-blue-700 mt-5 w-full">Cancle</button>
 
 
                                 <button type="submit"

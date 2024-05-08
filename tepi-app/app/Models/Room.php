@@ -15,4 +15,9 @@ class Room extends Model
     {
         return $this->hasMany(Facility::class);
     }
+
+    public function room_access()
+    {
+        return $this->hasMany(RoomAccess::class, 'id', 'room_id');
+    }
 }
