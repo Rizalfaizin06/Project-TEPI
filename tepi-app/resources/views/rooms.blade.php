@@ -11,12 +11,16 @@
 
 <body>
     <?php
+    $totalPage = $room_data->total();
+    $lastPage = $room_data->lastPage();
+    $currentPage = $room_data->currentPage();
+    $perPage = $room_data->perPage();
     // $fac = $rooms[3]->facility->pluck('category')->toArray();
     
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
-    // var_dump($room_data);
+    // var_dump($room_data->total());
     
     // Memisahkan string berdasarkan koma dan menjadikannya array
     
@@ -73,7 +77,7 @@
                     @endforeach
 
                 </div>
-
+                <x-pagination :total="$totalPage" :lastpage="$lastPage" :perpage="$perPage" :currentpage="$currentPage" />
 
             </div>
 

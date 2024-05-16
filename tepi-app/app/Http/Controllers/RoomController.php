@@ -26,7 +26,7 @@ class RoomController extends Controller
             ->groupBy('date', 'time_start', 'time_end', 'room_accesses.room_id')
             ->orderBy('date', 'desc')
             ->orderBy('time_start', 'desc')
-            ->get();
+            ->paginate(3);
         // $room_data = RoomAccess::with(['rooms'])
 
         //     ->get();
