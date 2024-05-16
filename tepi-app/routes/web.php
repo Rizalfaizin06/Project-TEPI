@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessLogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StudentController;
@@ -22,6 +23,8 @@ Route::get('/test', function () {
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home_page');
+
+Route::get('/log', [AccessLogController::class, 'index']);
 
 Route::get('/rooms', [RoomController::class, 'index']);
 Route::post('/room/details', [RoomController::class, 'details']);

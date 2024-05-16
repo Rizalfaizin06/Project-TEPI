@@ -304,6 +304,11 @@ class RoomController extends Controller
         }
 
         if ($found_dosen) {
+            $log = new AccessLog();
+            $log->student_id = $student['id'];
+            $log->room_id = $room_id;
+            $log->message = "Akses Dosen Diterima";
+            $log->save();
             return response()->json([
                 'status' => 200,
                 'message' => 'Akses selalu tersedia untuk dosen',
