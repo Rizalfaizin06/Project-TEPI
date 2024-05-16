@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccessLog;
 use App\Models\RoomAccess;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -14,9 +16,20 @@ class RoomController extends Controller
     // }
     public function index()
     {
-        $room_data = RoomAccess::with(['rooms'])
+        DB::statement("SET SQL_MODE=''");
 
+        $room_data = DB::table('room_accesses')
+            ->select('room_accesses.id', 'room_accesses.student_id', 'room_accesses.date', 'room_accesses.time_start', 'room_accesses.time_end', 'room_accesses.description', 'rooms.title', 'rooms.picture')
+            ->selectRaw('GROUP_CONCAT(student_group_categories.category SEPARATOR \',\') AS category')
+            ->join('rooms', 'room_accesses.room_id', '=', 'rooms.id')
+            ->join('student_group_categories', 'student_group_categories.id', '=', 'room_accesses.group_id')
+            ->groupBy('date', 'time_start', 'time_end', 'room_accesses.room_id')
+            ->orderBy('date', 'desc')
+            ->orderBy('time_start', 'desc')
             ->get();
+        // $room_data = RoomAccess::with(['rooms'])
+
+        //     ->get();
         return view('rooms', ["title" => "Home", "room_data" => $room_data]);
     }
     public function details(Request $request)
@@ -309,6 +322,11 @@ class RoomController extends Controller
             ->get();
         // Jika akses tidak ada, kembalikan respons false
         if ($access->isEmpty()) {
+            $log = new AccessLog();
+            $log->student_id = $student['id'];
+            $log->room_id = $room_id;
+            $log->message = "Akses ditolak";
+            $log->save();
             return response()->json([
                 'status' => 404,
                 'message' => 'Akses tidak tersedia',
@@ -318,6 +336,11 @@ class RoomController extends Controller
             ], 404);
         }
 
+        $log = new AccessLog();
+        $log->student_id = $student['id'];
+        $log->room_id = $room_id;
+        $log->message = "Akses diterima";
+        $log->save();
         // Jika akses tersedia, kembalikan respons true
         return response()->json([
             'status' => 200,

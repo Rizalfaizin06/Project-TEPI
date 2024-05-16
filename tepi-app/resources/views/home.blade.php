@@ -39,7 +39,7 @@
         <h1 class="text-primary font-poppins font-bold text-2xl p-5">Laboratorium</h1>
 
 
-        <div class="flex gap-5 overflow-x-scroll px-5">
+        <div class="flex gap-5 overflow-x-auto px-5">
             @foreach ($rooms as $room)
                 <form action="/room/details" method="post">
                     @csrf

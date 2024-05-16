@@ -7,6 +7,10 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
+        "local": "php artisan serv",
+        "serv": "php artisan serv --host 192.168.100.123 --port 8000",
+        "freshmigrate": "php artisan migrate:fresh --seed",
+        "migrate": "php artisan migrate",
         "production": "mix --production"
     },
     "devDependencies": {

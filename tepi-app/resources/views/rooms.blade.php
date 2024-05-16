@@ -39,15 +39,43 @@
                     <x-dropdown />
                 </div>
             </div>
-            <h1 class="text-primary font-poppins font-bold text-2xl py-5">Laboratorium</h1>
+
+            {{-- <h1 class="text-primary font-poppins font-bold text-2xl py-5">Laboratorium</h1> --}}
+
+            <div class="flex flex-col items-center gap-5 ">
+                <div class="flex flex-col gap-5 px-5">
+                    @foreach ($room_data as $room)
+                        {{-- <form action="/room/details" method="post"> --}}
+                        @csrf
+                        <?php
+                        
+                        // echo $room->date;
+                        // echo ' - ';
+                        // echo $room->time_start;
+                        $data_groups = explode(',', $room->category);
+                        $room_data = [
+                            'id' => $room->id,
+                            'title' => $room->title,
+                            'picture' => $room->picture,
+                            'description' => $room->description,
+                            'groups' => $data_groups,
+                        ];
+                        // var_dump($room_data);
+                        ?>
+                        <input type="hidden" name="room_data" value="{{ json_encode($room_data) }}">
+                        <button type="submit">
+                            <x-card-large :title="$room->title" :desc="$room->description" :pic="$room->picture" :timestart="$room->time_start"
+                                :timeend="$room->time_end" :date="$room->date" :groups="$data_groups" />
+
+                            {{-- <x-card :title="$room->title" :desc="$room->description" :pic="$room->picture" :status="$room->room_state"
+                            :facility="$data_fasilities" /> --}}
+                        </button>
+                        {{-- </form> --}}
+                    @endforeach
+
+                </div>
 
 
-            <div class="flex flex-col items-center gap-5">
-
-                <a href="#" class="w-full">
-                    <x-card-large />
-
-                </a>
             </div>
 
         </div>
