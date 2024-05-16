@@ -16,13 +16,12 @@
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
-    var_dump($room_data);
+    // var_dump($room_data);
     
     // Memisahkan string berdasarkan koma dan menjadikannya array
     
     // Menampilkan hasil
     // print_r($data_fasilities);
-    
     ?>
     <div class="flex flex-col items-center">
         <div class="w-full">

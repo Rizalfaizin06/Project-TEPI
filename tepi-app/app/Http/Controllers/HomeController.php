@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->join('facility_categories AS fc', 'f.category_id', '=', 'fc.id')
             ->leftJoin('room_accesses AS RA', 'RA.room_id', '=', 'rooms.id')
             ->groupBy('rooms.id')
-            ->get();
+            ->paginate(4);
 
         // $rooms = DB::table('rooms')
         //     ->leftJoin('room_accesses', 'rooms.id', '=', 'room_accesses.room_id')
