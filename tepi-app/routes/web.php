@@ -16,13 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/test', function () {
+    return view('welcome');
+});
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home_page');
 
+Route::get('/rooms', [RoomController::class, 'index']);
 Route::post('/room/details', [RoomController::class, 'details']);
 Route::post('/room/booking', [RoomController::class, 'booking']);
 

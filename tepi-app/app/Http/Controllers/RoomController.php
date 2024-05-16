@@ -12,6 +12,13 @@ class RoomController extends Controller
     // {
     //     return view('home', ["title" => "Home", "rooms" => Room::with('facility')->get()]);
     // }
+    public function index()
+    {
+        $room_data = RoomAccess::with(['rooms'])
+
+            ->get();
+        return view('rooms', ["title" => "Home", "room_data" => $room_data]);
+    }
     public function details(Request $request)
     {
 
@@ -96,6 +103,9 @@ class RoomController extends Controller
                 return response()->json([
                     'status' => 404,
                     'message' => 'Mahasiswa dengan rfid tersebut tidak ditemukan.',
+                    'data' => [
+                        'access' => false,
+                    ]
                 ], 404);
             }
 
@@ -106,14 +116,20 @@ class RoomController extends Controller
             if ($updatedRows === 0) {
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Tidak ada data null yang ditemukan untuk diperbarui.',
+                    'message' => 'Tidak ada data ruangan yang ditemukan untuk dambahkan penanggung jawab.',
+                    'data' => [
+                        'access' => false,
+                    ]
                 ], 404);
             }
 
             // Redirect atau kirim respons sukses ke pengguna
             return response()->json([
                 'status' => 'success',
-                'message' => 'Room accesses berhasil diperbarui dengan student_id yang sesuai.',
+                'message' => 'Menambah penanggung jawab ruangan berhasil.',
+                'data' => [
+                    'access' => true,
+                ]
             ]);
 
         } catch (\Exception $e) {
@@ -121,6 +137,9 @@ class RoomController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+                'data' => [
+                    'access' => false,
+                ]
             ], 500);
         }
 
@@ -239,6 +258,9 @@ class RoomController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'User not found',
+                'data' => [
+                    'access' => false,
+                ]
             ], 404);
         } else {
             // Lakukan operasi json_decode() hanya jika $student tidak null
@@ -259,6 +281,24 @@ class RoomController extends Controller
 
         // Hapus nilai duplikat jika diperlukan
         $category_ids = array_unique($category_ids);
+
+        $found_dosen = false;
+        foreach ($category_ids as $categoryId) {
+            if ($categoryId == 1) {
+                $found_dosen = true;
+                break;
+            }
+        }
+
+        if ($found_dosen) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Akses selalu tersedia untuk dosen',
+                'data' => [
+                    'access' => true,
+                ]
+            ], 200);
+        }
 
         $access = RoomAccess::whereIn('group_id', $category_ids)
             ->where('room_id', '=', $room_id)  // Filter by current date

@@ -14,8 +14,8 @@ class StudentGroupFactory extends Factory
     public function definition()
     {
         return [
-            'student_id' => $this->faker->numberBetween(1, 10),
-            'category_id' => $this->faker->numberBetween(1, 5),
+            'student_id' => $this->faker->numberBetween(3, 10),
+            'category_id' => $this->faker->numberBetween(2, 11),
         ];
     }
 }

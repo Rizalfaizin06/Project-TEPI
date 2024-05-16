@@ -16,12 +16,13 @@
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
-    // var_dump($rooms[3]['facilities']);
+    var_dump($rooms[3]);
     
     // Memisahkan string berdasarkan koma dan menjadikannya array
     
     // Menampilkan hasil
     // print_r($data_fasilities);
+    
     ?>
 
     <x-navbar />
@@ -67,38 +68,6 @@
 
     </div>
 
-    {{-- 
-    <script>
-        $(document).ready(function() {
-            $('.group').select2({
-                placeholder: 'select'
-            });
-            $('#group').select2({
-                ajax: {
-                    url: "{{ route('get-category') }}",
-                    type: "post",
-                    delay: 0,
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            search: params.term,
-                            "_token": "{{ csrf_token() }}"
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.category
-                                };
-                            })
-                        };
-                    }
-                }
-            });
-        });
-    </script> --}}
 
 
 

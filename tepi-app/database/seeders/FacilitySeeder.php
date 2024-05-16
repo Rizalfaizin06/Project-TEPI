@@ -14,7 +14,7 @@ class FacilitySeeder extends Seeder
      */
     public function run()
     {
-        Facility::factory(10)->create();
+        Facility::factory(100)->create();
 
     }
 }

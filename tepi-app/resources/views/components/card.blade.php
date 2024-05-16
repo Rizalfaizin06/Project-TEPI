@@ -5,7 +5,7 @@
     <div class="p-5">
         <a href="#">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate max-w-52">
-                {{ $status }}{{ $title }}
+                {{ $title }}
             </h5>
         </a>
         @if ($status == true)
