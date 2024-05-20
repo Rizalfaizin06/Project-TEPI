@@ -17,6 +17,7 @@ class AccessLogController extends Controller
     {
 
         $accest_list = AccessLog::with('student', 'room')
+            ->orderBy('created_at', 'desc')
             ->paginate(8);
 
         return view('access_log', ["title" => "Home", "accest_list" => $accest_list]);
