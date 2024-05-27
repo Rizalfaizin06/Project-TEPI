@@ -34,7 +34,9 @@
 
             <div class="flex justify-between items-center p-5">
                 <div class=" ">
-                    <x-search-bar />
+                    <form action="/" method="get">
+                        <x-search-bar />
+                    </form>
                 </div>
                 <div class="flex gap-3">
                     <x-dropdown />
