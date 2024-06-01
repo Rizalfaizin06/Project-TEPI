@@ -26,6 +26,10 @@
     
     // Menampilkan hasil
     // print_r($data_fasilities);
+    $search_data = [
+        'search' => request('search'),
+        'state' => request('status'),
+    ];
     ?>
 
 
@@ -100,8 +104,8 @@
                     </div>
 
                 </div>
-                <x-pagination :total="$totalPage" :lastpage="$lastPage" :perpage="$perPage" :currentpage="$currentPage" />
-
+                <x-pagination :total="$totalPage" :lastpage="$lastPage" :perpage="$perPage" :currentpage="$currentPage"
+                    :search="$search_data" />
             </div>
 
         </div>

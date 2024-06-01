@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\AccessLog;
 use App\Models\RoomAccess;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+
 
 class RoomController extends Controller
 {
@@ -17,15 +20,41 @@ class RoomController extends Controller
     public function index()
     {
         DB::statement("SET SQL_MODE=''");
-
+        $now = Carbon::now();
+        echo request('status');
+        $req = request('status');
         $room_data = DB::table('room_accesses')
             ->select('room_accesses.id', 'room_accesses.student_id', 'room_accesses.date', 'room_accesses.time_start', 'room_accesses.time_end', 'room_accesses.description', 'rooms.title', 'rooms.picture')
             ->selectRaw('GROUP_CONCAT(student_group_categories.category SEPARATOR \',\') AS category')
             ->join('rooms', 'room_accesses.room_id', '=', 'rooms.id')
             ->join('student_group_categories', 'student_group_categories.id', '=', 'room_accesses.group_id')
+            ->where(function ($query) use ($now, $req) {
+                if ($req == "in_use") {
+                    $query->orWhere(function ($query) use ($now) {
+                        $query->where('room_accesses.time_start', '<', $now->format('H:i:s'))
+                            ->where('room_accesses.time_end', '>', $now->format('H:i:s'))
+                            ->where('room_accesses.date', '=', $now->format('Y-m-d'));
+                    });
+                } else if ($req == "was_use") {
+                    $query->orWhere(function ($query) use ($now) {
+                        $query->where('room_accesses.time_end', '<', $now->format('H:i:s'))
+                            ->where('room_accesses.date', '=', $now->format('Y-m-d'));
+                    });
+                    $query->orWhere('room_accesses.date', '<', $now->format('Y-m-d'));
+
+                } else if ($req == "will_use") {
+                    $query->orWhere(function ($query) use ($now) {
+                        $query->where('room_accesses.time_start', '>', $now->format('H:i:s'))
+                            ->where('room_accesses.date', '=', $now->format('Y-m-d'));
+                    });
+                    $query->orWhere('room_accesses.date', '>', $now->format('Y-m-d'));
+
+                }
+            })
             ->groupBy('date', 'time_start', 'time_end', 'room_accesses.room_id')
             ->orderBy('date', 'desc')
             ->orderBy('time_start', 'desc')
+            ->having('title', 'like', '%' . request('search') . '%')
             ->paginate(3);
         // $room_data = RoomAccess::with(['rooms'])
 

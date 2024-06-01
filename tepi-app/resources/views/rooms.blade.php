@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script defer src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
     <title>{{ $title }}</title>
 </head>
 
@@ -16,7 +18,17 @@
     $currentPage = $room_data->currentPage();
     $perPage = $room_data->perPage();
     // $fac = $rooms[3]->facility->pluck('category')->toArray();
+    $data_dropdown = [
+        'all' => 'All Status',
+        'in_use' => 'In Use',
+        'was_use' => 'Was Use',
+        'will_use' => 'Will Be Use',
+    ];
     
+    $search_data = [
+        'search' => request('search'),
+        'state' => request('status'),
+    ];
     // foreach ($fac as $fas) {
     //     echo $fas;
     // }
@@ -33,17 +45,17 @@
             <x-navbar />
         </div>
         <div class="w-3/5 flex flex-col">
-            <div class="flex justify-between items-center py-5">
-                <div class=" ">
-                    <x-search-bar />
-                </div>
-                <div class="flex gap-3">
-                    {{-- <x-dropdown />
-                    <x-dropdown /> --}}
-                    <x-dropdown :params="request('status')" />
 
+            <form id="searchForm" action="/rooms" method="get">
+                <div class="flex justify-between items-center p-5">
+                    <div class=" ">
+                        <x-search-bar />
+                    </div>
+                    <div class="flex gap-3">
+                        <x-dropdown :params="request('status')" :values="$data_dropdown" />
+                    </div>
                 </div>
-            </div>
+            </form>
 
             {{-- <h1 class="text-primary font-poppins font-bold text-2xl py-5">Laboratorium</h1> --}}
 
@@ -79,8 +91,10 @@
                     @endforeach
 
                 </div>
-                <x-pagination :total="$totalPage" :lastpage="$lastPage" :perpage="$perPage" :currentpage="$currentPage" />
-
+                <x-pagination :total="$totalPage" :lastpage="$lastPage" :perpage="$perPage" :currentpage="$currentPage"
+                    :search="$search_data" />
+                {{-- <x-pagination :total="$rooms->total()" :lastpage="$rooms->lastPage()" :perpage="$rooms->perPage()" :currentpage="$rooms->currentPage()"
+                    :search="$search_data" /> --}}
             </div>
 
         </div>
@@ -91,7 +105,13 @@
 
 
 
-
+    <script>
+        $(document).ready(function() {
+            $('#statusDropdown').on('change', function() {
+                $('#searchForm').submit();
+            });
+        });
+    </script>
 </body>
 
 </html>
