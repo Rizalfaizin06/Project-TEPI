@@ -41,7 +41,7 @@
     @endphp <div class="flex flex-col items-center">
         <div class="w-full">
 
-            <x-navbar />
+            <x-navbar :title="$title" />
         </div>
         <div class="w-3/4">
 

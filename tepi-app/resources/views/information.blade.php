@@ -14,7 +14,8 @@
     <div class="flex flex-col">
         <div class="z-20 mb-32">
 
-            <x-navbar />
+            <x-navbar :title="$title" />
+
         </div>
 
         <section

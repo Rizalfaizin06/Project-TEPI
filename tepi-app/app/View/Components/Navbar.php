@@ -11,9 +11,12 @@ class Navbar extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $title;
+
+    public function __construct($title)
     {
-        //
+        $this->title = $title;
+
     }
 
     /**

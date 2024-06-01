@@ -20,7 +20,7 @@ class AccessLogController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        return view('access_log', ["title" => "Home", "accest_list" => $accest_list]);
+        return view('access_log', ["title" => "Log Access", "accest_list" => $accest_list]);
 
     }
 

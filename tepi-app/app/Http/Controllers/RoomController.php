@@ -21,28 +21,27 @@ class RoomController extends Controller
     {
         DB::statement("SET SQL_MODE=''");
         $now = Carbon::now();
-        echo request('status');
-        $req = request('status');
+        $room_state = request('status');
         $room_data = DB::table('room_accesses')
             ->select('room_accesses.id', 'room_accesses.student_id', 'room_accesses.date', 'room_accesses.time_start', 'room_accesses.time_end', 'room_accesses.description', 'rooms.title', 'rooms.picture')
             ->selectRaw('GROUP_CONCAT(student_group_categories.category SEPARATOR \',\') AS category')
             ->join('rooms', 'room_accesses.room_id', '=', 'rooms.id')
             ->join('student_group_categories', 'student_group_categories.id', '=', 'room_accesses.group_id')
-            ->where(function ($query) use ($now, $req) {
-                if ($req == "in_use") {
+            ->where(function ($query) use ($now, $room_state) {
+                if ($room_state == "in_use") {
                     $query->orWhere(function ($query) use ($now) {
                         $query->where('room_accesses.time_start', '<', $now->format('H:i:s'))
                             ->where('room_accesses.time_end', '>', $now->format('H:i:s'))
                             ->where('room_accesses.date', '=', $now->format('Y-m-d'));
                     });
-                } else if ($req == "was_use") {
+                } else if ($room_state == "was_use") {
                     $query->orWhere(function ($query) use ($now) {
                         $query->where('room_accesses.time_end', '<', $now->format('H:i:s'))
                             ->where('room_accesses.date', '=', $now->format('Y-m-d'));
                     });
                     $query->orWhere('room_accesses.date', '<', $now->format('Y-m-d'));
 
-                } else if ($req == "will_use") {
+                } else if ($room_state == "will_use") {
                     $query->orWhere(function ($query) use ($now) {
                         $query->where('room_accesses.time_start', '>', $now->format('H:i:s'))
                             ->where('room_accesses.date', '=', $now->format('Y-m-d'));
@@ -59,7 +58,7 @@ class RoomController extends Controller
         // $room_data = RoomAccess::with(['rooms'])
 
         //     ->get();
-        return view('rooms', ["title" => "Home", "room_data" => $room_data]);
+        return view('rooms', ["title" => "Rooms", "room_data" => $room_data]);
     }
     public function details(Request $request)
     {
