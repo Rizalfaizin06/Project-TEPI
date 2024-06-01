@@ -34,11 +34,11 @@
         // var_dump($rooms->total());
         // var_dump($rooms);
 
-        // Memisahkan string berdasarkan koma dan menjadikannya array
-
-        // Menampilkan hasil
         // print_r($rooms[0]->data_fasilities);
-    @endphp <div class="flex flex-col items-center">
+    @endphp
+
+
+    <div class="flex flex-col items-center">
         <div class="w-full">
 
             <x-navbar :title="$title" />

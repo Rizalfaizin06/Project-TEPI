@@ -13,12 +13,10 @@
 
 <body>
     {{-- {{ $student_data }} --}}
-    <?php
-    // var_dump($booking_data);
-    // $room_data = json_decode($room_data, true);
-    // $picture = $room_data['picture'];
-    ?>
-
+    @php// var_dump($booking_data);
+        // $room_data = json_decode($room_data, true);
+        // $picture = $room_data['picture'];
+    @endphp
 
     <div class="container  w-full h-screen flex ">
         <div class="flex flex-col gap-10 justify-items-center items-center w-full p-10">

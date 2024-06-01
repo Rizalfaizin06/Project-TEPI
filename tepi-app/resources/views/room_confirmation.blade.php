@@ -1,9 +1,8 @@
-<?php
-
-// $booking_data = json_decode($booking_data, true);
-// var_dump($booking_data);
-// $picture = $room_data['picture'];
-?>
+@php
+    // $booking_data = json_decode($booking_data, true);
+    // var_dump($booking_data);
+    // $picture = $room_data['picture'];
+@endphp
 
 
 <div class="w-full p-5 flex justify-center items-center justify-items-center">

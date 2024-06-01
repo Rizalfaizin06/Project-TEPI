@@ -10,28 +10,24 @@
 </head>
 
 <body>
-    <?php
-    $totalPage = $accest_list->total();
-    $lastPage = $accest_list->lastPage();
-    $currentPage = $accest_list->currentPage();
-    $perPage = $accest_list->perPage();
-    // $fac = $rooms[3]->facility->pluck('category')->toArray();
-    
-    // foreach ($fac as $fas) {
-    //     echo $fas;
-    // }
-    // var_dump($accest_list);
-    
-    // Memisahkan string berdasarkan koma dan menjadikannya array
-    
-    // Menampilkan hasil
-    // print_r($data_fasilities);
-    $search_data = [
-        'search' => request('search'),
-        'state' => request('status'),
-    ];
-    ?>
+    @php
+        $totalPage = $accest_list->total();
+        $lastPage = $accest_list->lastPage();
+        $currentPage = $accest_list->currentPage();
+        $perPage = $accest_list->perPage();
+        // $fac = $rooms[3]->facility->pluck('category')->toArray();
 
+        // foreach ($fac as $fas) {
+        //     echo $fas;
+        // }
+        // var_dump($accest_list);
+
+        // print_r($data_fasilities);
+        $search_data = [
+            'search' => request('search'),
+            'state' => request('status'),
+        ];
+    @endphp
 
     <div class="flex flex-col items-center">
         <div class="w-full">

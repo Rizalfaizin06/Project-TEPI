@@ -131,15 +131,12 @@ class RoomController extends Controller
     public function add_booking_owner(Request $request)
     {
         try {
-            // Validasi data
             $request->validate([
                 'rfid_user' => 'required|string',
             ]);
 
-            // Temukan mahasiswa berdasarkan rfid
             $student = Student::where('rfid', $request->input('rfid_user'))->first();
 
-            // Jika mahasiswa tidak ditemukan
             if (!$student) {
                 return response()->json([
                     'status' => 404,
@@ -150,21 +147,18 @@ class RoomController extends Controller
                 ], 404);
             }
 
-            // Update room accesses dengan student_id dari mahasiswa yang ditemukan
             $updatedRows = RoomAccess::whereNull('student_id')->update(['student_id' => $student->id]);
 
-            // Check if any records were updated
             if ($updatedRows === 0) {
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Tidak ada data ruangan yang ditemukan untuk dambahkan penanggung jawab.',
+                    'message' => 'Tidak ada data ruangan yang ditemukan.',
                     'data' => [
                         'access' => false,
                     ]
                 ], 404);
             }
 
-            // Redirect atau kirim respons sukses ke pengguna
             return response()->json([
                 'status' => 'success',
                 'message' => 'Menambah penanggung jawab ruangan berhasil.',
@@ -174,7 +168,6 @@ class RoomController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            // Tangani kesalahan
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
@@ -197,14 +190,11 @@ class RoomController extends Controller
         //     ->get()
         //     ->groupBy('group_category_id');
 
-        // Ambil satu hasil untuk setiap grup yang unik
         // foreach ($data_confirmation as $groupCategoryId => $roomAccesses) {
         //     $firstRoomAccess = $roomAccesses->first();
 
-        //     // Cetak category hanya sekali
         //     echo "Group Category: {$firstRoomAccess->groupCategory->category}\n";
 
-        //     // Cetak rooms dan student
         //     foreach ($roomAccesses as $roomAccess) {
         //         echo "Room: {$roomAccess->rooms->title}, Student: {$roomAccess->student->name}\n";
         //     }
@@ -280,10 +270,8 @@ class RoomController extends Controller
 
     public function confirm_booking()
     {
-        // Memperbarui entri di tabel room_accesses di mana nilai kolom status adalah 0 menjadi 1
         RoomAccess::where('confirmation', 0)->update(['confirmation' => 1]);
 
-        // Redirect ke halaman home
         return redirect()->route('home_page');
     }
 
@@ -304,23 +292,18 @@ class RoomController extends Controller
                 ]
             ], 404);
         } else {
-            // Lakukan operasi json_decode() hanya jika $student tidak null
             // $data = json_decode($student, true);
             $data = $student->toArray();
 
         }
 
 
-        // Inisialisasi array kosong untuk menyimpan category_ids
         $category_ids = [];
 
-        // Loop melalui setiap entri dalam properti student_group
         foreach ($data['student_group'] as $entry) {
-            // Tambahkan category_id ke dalam array category_ids
             $category_ids[] = $entry['category_id'];
         }
 
-        // Hapus nilai duplikat jika diperlukan
         $category_ids = array_unique($category_ids);
 
         $found_dosen = false;
@@ -347,13 +330,13 @@ class RoomController extends Controller
         }
 
         $access = RoomAccess::whereIn('group_id', $category_ids)
-            ->where('room_id', '=', $room_id)  // Filter by current date
-            ->where('date', '=', date('Y-m-d'))  // Filter by current date
-            ->where('time_start', '<', date('H:i:s'))  // Filter for entries where time_start is before current time
-            ->where('time_end', '>', date('H:i:s'))  // Filter for entries where time_end is after current time
+            ->where('room_id', '=', $room_id)
+            ->where('date', '=', date('Y-m-d'))
+            ->where('time_start', '<', date('H:i:s'))
+            ->where('time_end', '>', date('H:i:s'))
             ->where('confirmation', true)
             ->get();
-        // Jika akses tidak ada, kembalikan respons false
+
         if ($access->isEmpty()) {
             $log = new AccessLog();
             $log->student_id = $student['id'];
@@ -374,14 +357,14 @@ class RoomController extends Controller
         $log->room_id = $room_id;
         $log->message = "Akses diterima";
         $log->save();
-        // Jika akses tersedia, kembalikan respons true
+
         return response()->json([
             'status' => 200,
             'message' => 'Akses tersedia',
             'data' => [
                 'access' => true,
                 // 'data' => $access
-                // 'id' => $access->id // Anda bisa sesuaikan dengan kolom yang sesuai untuk ID
+                // 'id' => $access->id
             ]
         ], 200);
         // return $access;

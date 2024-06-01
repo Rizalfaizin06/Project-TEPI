@@ -12,33 +12,31 @@
 </head>
 
 <body>
-    <?php
-    $totalPage = $room_data->total();
-    $lastPage = $room_data->lastPage();
-    $currentPage = $room_data->currentPage();
-    $perPage = $room_data->perPage();
-    // $fac = $rooms[3]->facility->pluck('category')->toArray();
-    $data_dropdown = [
-        'all' => 'All Status',
-        'in_use' => 'In Use',
-        'was_use' => 'Was Use',
-        'will_use' => 'Will Be Use',
-    ];
-    
-    $search_data = [
-        'search' => request('search'),
-        'state' => request('status'),
-    ];
-    // foreach ($fac as $fas) {
-    //     echo $fas;
-    // }
-    // var_dump($room_data->total());
-    
-    // Memisahkan string berdasarkan koma dan menjadikannya array
-    
-    // Menampilkan hasil
-    // print_r($data_fasilities);
-    ?>
+    @php
+        $totalPage = $room_data->total();
+        $lastPage = $room_data->lastPage();
+        $currentPage = $room_data->currentPage();
+        $perPage = $room_data->perPage();
+        // $fac = $rooms[3]->facility->pluck('category')->toArray();
+        $data_dropdown = [
+            'all' => 'All Status',
+            'in_use' => 'In Use',
+            'was_use' => 'Was Use',
+            'will_use' => 'Will Be Use',
+        ];
+
+        $search_data = [
+            'search' => request('search'),
+            'state' => request('status'),
+        ];
+        // foreach ($fac as $fas) {
+        //     echo $fas;
+        // }
+        // var_dump($room_data->total());
+
+        // print_r($data_fasilities);
+    @endphp
+
     <div class="flex flex-col items-center">
         <div class="w-full">
 
