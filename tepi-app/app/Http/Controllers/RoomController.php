@@ -15,7 +15,7 @@ class RoomController extends Controller
 {
     // public function index()
     // {
-    //     return view('home', ["title" => "Home", "rooms" => Room::with('facility')->get()]);
+    //     return view('home', ["title" => "Booking", "rooms" => Room::with('facility')->get()]);
     // }
     public function index()
     {
@@ -65,7 +65,7 @@ class RoomController extends Controller
 
 
         $room_data = $request->input('room_data');
-        return view('room_details', ["title" => "Home", "room_data" => $room_data]);
+        return view('room_details', ["title" => "Booking", "room_data" => $room_data]);
     }
 
     public function booking(Request $request)
@@ -97,7 +97,7 @@ class RoomController extends Controller
         }
 
         // return "sets";
-        return view('room_booking', ["title" => "Home", "booking_data" => $booking_data]);
+        return view('room_booking', ["title" => "Booking", "booking_data" => $booking_data]);
     }
     public function check_booking_owner()
     {
@@ -271,7 +271,7 @@ class RoomController extends Controller
         // echo $newJsonData;
 
         // return $booking_data;
-        return view('room_confirmation', ["title" => "Home", "booking_data" => $booking_data]);
+        return view('room_confirmation', ["title" => "Booking", "booking_data" => $booking_data]);
 
 
 
