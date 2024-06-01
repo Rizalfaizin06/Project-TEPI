@@ -15,14 +15,15 @@ class Pagination extends Component
     public $lastpage;
     public $perpage;
     public $currentpage;
+    public $search;
 
-    public function __construct($total, $lastpage, $perpage, $currentpage)
+    public function __construct($total, $lastpage, $perpage, $currentpage, array $search)
     {
         $this->total = $total;
         $this->lastpage = $lastpage;
         $this->perpage = $perpage;
         $this->currentpage = $currentpage;
-        //
+        $this->search = $search;
     }
 
     /**

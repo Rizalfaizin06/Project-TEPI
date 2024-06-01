@@ -38,8 +38,10 @@
                     <x-search-bar />
                 </div>
                 <div class="flex gap-3">
-                    <x-dropdown />
-                    <x-dropdown />
+                    {{-- <x-dropdown />
+                    <x-dropdown /> --}}
+                    <x-dropdown :params="request('status')" />
+
                 </div>
             </div>
 

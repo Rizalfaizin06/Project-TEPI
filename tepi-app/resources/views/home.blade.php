@@ -6,43 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script defer src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
     <title>{{ $title }}</title>
 </head>
 
 <body>
-    <?php
-    // $fac = $rooms[3]->facility->pluck('category')->toArray();
-    
-    // foreach ($fac as $fas) {
-    //     echo $fas;
-    // }
-    // var_dump($rooms->lastPage());
-    // var_dump($rooms->total());
-    // var_dump($rooms);
-    
-    // Memisahkan string berdasarkan koma dan menjadikannya array
-    
-    // Menampilkan hasil
-    // print_r($data_fasilities);
-    ?>
-    <div class="flex flex-col items-center">
+    @php
+        // $tes = 'computer,electrical_plug,lan,projector,webcam';
+        // $data_dropdown = explode(',', $tes);
+        $data_dropdown = [
+            'all' => 'All Status',
+            'available' => 'Available',
+            'unavailable' => 'Unavailable',
+        ];
+
+        $search_data = [
+            'search' => request('search'),
+            'state' => request('status'),
+        ];
+        // $fac = $rooms[3]->facility->pluck('category')->toArray();
+
+        // foreach ($fac as $fas) {
+        //     echo $fas;
+        // }
+        // var_dump($rooms->lastPage());
+        // var_dump($rooms->total());
+        // var_dump($rooms);
+
+        // Memisahkan string berdasarkan koma dan menjadikannya array
+
+        // Menampilkan hasil
+        // print_r($rooms[0]->data_fasilities);
+    @endphp <div class="flex flex-col items-center">
         <div class="w-full">
 
             <x-navbar />
         </div>
-        <div class="w-3/5">
+        <div class="w-3/4">
 
-            <div class="flex justify-between items-center p-5">
-                <div class=" ">
-                    <form action="/" method="get">
+            <form id="searchForm" action="/" method="get">
+                <div class="flex justify-between items-center p-5">
+                    <div class=" ">
                         <x-search-bar />
-                    </form>
+                    </div>
+                    <div class="flex gap-3">
+                        <x-dropdown :params="request('status')" :values="$data_dropdown" />
+                    </div>
                 </div>
-                <div class="flex gap-3">
-                    <x-dropdown />
-                    <x-dropdown />
-                </div>
-            </div>
+            </form>
             <h1 class="text-primary font-poppins font-bold text-2xl p-5">Laboratorium</h1>
 
             <div class="flex flex-col gap-5 items-center">
@@ -72,7 +84,8 @@
                     @endforeach
 
                 </div>
-                <x-pagination :total="$rooms->total()" :lastpage="$rooms->lastPage()" :perpage="$rooms->perPage()" :currentpage="$rooms->currentPage()" />
+                <x-pagination :total="$rooms->total()" :lastpage="$rooms->lastPage()" :perpage="$rooms->perPage()" :currentpage="$rooms->currentPage()"
+                    :search="$search_data" />
 
             </div>
         </div>
@@ -80,7 +93,13 @@
 
 
     </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#statusDropdown').on('change', function() {
+                $('#searchForm').submit();
+            });
+        });
+    </script>
 </body>
 
 </html>

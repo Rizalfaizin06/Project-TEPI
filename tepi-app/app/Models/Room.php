@@ -11,10 +11,22 @@ class Room extends Model
 
     protected $guarded = ['id'];
 
-    public function scopeFilter($query, array $filters)
+    public function scopeFilter($query, $filters)
     {
-        if (isset($filters['search']) ? $filters['search'] : false) {
-            return $query->where('title', 'like', '%' . $filters['search'] . '%');
+        if (isset($filters) ? $filters : false) {
+            return $query->where('title', 'like', '%' . $filters . '%');
+        }
+
+    }
+    public function scopeFilterState($query, $filters)
+    {
+
+        if (isset($filters) ? $filters : false) {
+            if ($filters == 'available') {
+                return $query->having('room_state', '=', FALSE);
+            } else if ($filters == 'unavailable') {
+                return $query->having('room_state', '=', TRUE);
+            }
         }
     }
 

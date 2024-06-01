@@ -11,9 +11,13 @@ class Dropdown extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $params;
+    public $values;
+
+    public function __construct($params, array $values)
     {
-        //
+        $this->values = $values;
+        $this->params = $params;
     }
 
     /**
